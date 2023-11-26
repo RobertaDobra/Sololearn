@@ -1,0 +1,131 @@
+
+SELECT name, year
+FROM Books
+WHERE year > 1900
+
+UNION
+
+-- Select books from the New table with the year set to 2022
+SELECT name,  2022 as year
+FROM New
+
+
+-- Order the result set alphabetically by the name column
+ORDER BY name;
+
+
+
+
+
+SELECT
+    Authors.name AS name,
+    COUNT(Books.id) AS books
+FROM
+    Authors
+LEFT JOIN
+    Books ON Authors.id = Books.author_id
+GROUP BY
+    Authors.name
+ORDER BY
+    books DESC;
+
+
+
+
+select books.name, books.year, authors.name as author
+from books, authors -- MULTIPLE TABLES
+where authors.id=books.author_id
+order by author asc, books.year asc
+
+
+
+
+insert into Employees (firstname, lastname, salary) values ('Wang', 'Lee', 1900), ('Greta', 'Wu', 1200);
+SELECT id, firstname, lastname, salary
+FROM Employees
+ORDER BY id DESC;
+
+
+
+
+SELECT 
+    firstname,
+    lastname,
+    salary,
+    CASE 
+        WHEN salary <= 1500 THEN salary * 0.1
+        WHEN salary <= 2000 THEN salary * 0.2
+        ELSE salary * 0.3
+    END AS tax
+FROM Employees
+ORDER BY lastname ASC;
+
+
+
+
+
+Select concat(lower(firstname),'.',lower(lastname),'@company.com') as email -- STRING FUNCTIONS
+from employees
+order by email asc
+
+
+
+
+
+SELECT * FROM employees
+Order by salary DESC
+Limit 3
+
+
+
+
+
+ALTER TABLE cities
+ADD place VarChar(20);
+
+UPDATE cities
+SET PLACE = 'Belem Tower'
+WHERE name = 'Lisbon';
+
+UPDATE cities
+SET PLACE = 'Plaza Mayor'
+WHERE name = 'Madrid';
+
+UPDATE cities
+SET PLACE = 'Eiffel Tower'
+WHERE name = 'Paris';
+
+SELECT * FROM cities
+
+
+
+
+-- UPDATE AND REMOVE DATA
+DELETE FROM products WHERE ExpireDate <1;
+SELECT * FROM Products
+-- NUMBER OF DAYS BEFORE EXPIRATION
+
+
+
+
+
+-- INSERTING DATA
+CREATE TABLE leaderboard(
+    number INT,
+    nickname VARCHAR(20),
+    rating INT
+);
+
+INSERT INTO leaderboard VALUES (1, 'Predator', 9500),
+(2, 'JohnWar', 9300),
+(3, 'NightWarrior', 8900);
+
+SELECT * FROM leaderboard
+ORDER BY rating  DESC
+
+
+
+
+
+SELECT * FROM PRODUCTS WHERE fatpercentage < (SELECT AVG(fatpercentage) FROM PRODUCTS) -- SUBQUERIES
+ORDER BY fatpercentage ASC
