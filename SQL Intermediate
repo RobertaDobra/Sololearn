@@ -22,7 +22,7 @@ SELECT
     COUNT(Books.id) AS books
 FROM
     Authors
-LEFT JOIN
+LEFT JOIN -- some authors do not have any books associated with them
     Books ON Authors.id = Books.author_id
 GROUP BY
     Authors.name
@@ -40,7 +40,7 @@ order by author asc, books.year asc
 
 
 
-insert into Employees (firstname, lastname, salary) values ('Wang', 'Lee', 1900), ('Greta', 'Wu', 1200);
+insert into Employees (firstname, lastname, salary) values ('Wang', 'Lee', 1900), ('Greta', 'Wu', 1200); --- specify columns and the values to be inserted
 SELECT id, firstname, lastname, salary
 FROM Employees
 ORDER BY id DESC;
@@ -48,14 +48,15 @@ ORDER BY id DESC;
 
 
 
+-- Calculate the tax for each tier separately and then sum them up for the total tax:
 SELECT 
     firstname,
     lastname,
     salary,
     CASE 
         WHEN salary <= 1500 THEN salary * 0.1
-        WHEN salary <= 2000 THEN salary * 0.2
-        ELSE salary * 0.3
+        WHEN salary <= 2000 THEN (1500 * 0.1) + ((salary - 1500) * 0.2)
+        ELSE (1500 * 0.1) + (500 * 0.2) + ((salary - 2000) * 0.3)
     END AS tax
 FROM Employees
 ORDER BY lastname ASC;
@@ -74,7 +75,7 @@ order by email asc
 
 SELECT * FROM employees
 Order by salary DESC
-Limit 3
+Limit 3 -- maximum number of rows to return
 
 
 
@@ -115,16 +116,16 @@ CREATE TABLE leaderboard(
     rating INT
 );
 
-INSERT INTO leaderboard VALUES (1, 'Predator', 9500),
+INSERT INTO leaderboard VALUES (1, 'Predator', 9500), -- insert as many column values as the target table has in the same order as they are in the table
 (2, 'JohnWar', 9300),
 (3, 'NightWarrior', 8900);
 
 SELECT * FROM leaderboard
-ORDER BY rating  DESC
+ORDER BY rating DESC
 
 
 
 
 
-SELECT * FROM PRODUCTS WHERE fatpercentage < (SELECT AVG(fatpercentage) FROM PRODUCTS) -- SUBQUERIES
+SELECT * FROM PRODUCTS WHERE fatpercentage < (SELECT AVG(fatpercentage) FROM PRODUCTS) -- SUBQUERIES, lower than average
 ORDER BY fatpercentage ASC
